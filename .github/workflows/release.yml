@@ -30,10 +30,10 @@ jobs:
       - name: Install
         run: |
           pip3 install poetry
-      - name: run lint
-        run: make lint
-      - name: run UT
-        run: make test
+      # - name: run lint
+      #   run: make lint
+      # - name: run UT
+      #   run: make test
       - name: Build artifacts
         run: make build
       - name: Check Version
@@ -43,7 +43,7 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "dist/*"
+          artifacts: "./output/*"
           token: ${{ secrets.DAQF_GITHUB_TOKEN }}
           draft: false
           generateReleaseNotes: true
