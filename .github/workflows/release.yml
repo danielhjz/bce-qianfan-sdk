@@ -49,11 +49,10 @@ jobs:
           tag_ref="${{ github.ref }}"
           
           # Extract the tag name from the reference
-          TAG_NAME="${tag_ref#refs/tags/}"
+          export TAG_NAME="${tag_ref#refs/tags/}"
 
           echo "Triggered by tag: $TAG_NAME"
-          chmod +x ./src/scripts/release_github.sh
-          ./src/scripts/release_github.sh
+          bash ./src/scripts/release_github.sh
   # Single deploy job since we're just deploying
   docs:
     environment:
