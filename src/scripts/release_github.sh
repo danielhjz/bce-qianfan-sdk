@@ -1,5 +1,6 @@
 #!/bin/bash  
 
+echo $TAG_NAME
 echo "tag: $TAG_NAME"
 if [[ ! $TAG_NAME =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then  
   echo "invalid version tag."   
