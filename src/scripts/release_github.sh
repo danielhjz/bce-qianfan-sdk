@@ -1,7 +1,7 @@
 #!/bin/bash  
 
-echo "tag: ${TAG_NAME}"
-if [[ ! ${TAG_NAME} =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then  
+echo "tag: $TAG_NAME"
+if [[ ! $TAG_NAME =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then  
   echo "invalid version tag."   
   exit 1
 fi
