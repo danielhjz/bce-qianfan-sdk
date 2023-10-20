@@ -35,15 +35,13 @@ jobs:
       - name: Install
         run: |
           pip3 install poetry
-      # - name: run lint
-      #   run: make lint
-      # - name: run UT
-      #   run: make test
-      # - name: Build artifacts
-      #   run: make build
-      - name: release to pypi
-        env: 
-          TOKEN: ${{ secrets.PYPI_TOKEN }}
+      - name: run lint
+        run: make lint
+      - name: run UT
+        run: make test
+      - name: Build artifacts
+        run: make build
+      - name: Print the tag
         run: |
           # Get the tag reference (e.g., refs/tags/v1.0.0)
           tag_ref="${{ github.ref }}"
@@ -52,6 +50,10 @@ jobs:
           export TAG_NAME="${tag_ref#refs/tags/}"
 
           echo "Triggered by tag: $TAG_NAME"
+      - name: release to pypi
+        env: 
+          TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: |
           bash ./src/scripts/release_github.sh
   # Single deploy job since we're just deploying
   docs:
