@@ -52,7 +52,8 @@ jobs:
           TAG_NAME="${tag_ref#refs/tags/}"
 
           echo "Triggered by tag: $TAG_NAME"
-          bash ./src/scripts/release_github.sh
+          chmod +x ./src/scripts/release_github.sh
+          ./src/scripts/release_github.sh
   # Single deploy job since we're just deploying
   docs:
     environment:
