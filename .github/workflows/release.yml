@@ -30,25 +30,25 @@ jobs:
       - name: Install
         run: |
           pip3 install poetry
-      # - name: run lint
-      #   run: make lint
-      # - name: run UT
-      #   run: make test
-      # - name: Build artifacts
-      #   run: make build
+      - name: run lint
+        run: make lint
+      - name: run UT
+        run: make test
+      - name: Build artifacts
+        run: make build
       - name: Check Version
         id: check-version
         run: |
           echo version=$(poetry version --short) >> $GITHUB_OUTPUT
-      # - name: Create Release
-      #   uses: ncipollo/release-action@v1
-      #   with:
-      #     artifacts: "dist/*"
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     draft: false
-      #     generateReleaseNotes: true
-      #     tag: ${{ steps.check-version.outputs.version }}
-      #     commit: main
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/*"
+          token: ${{ secrets.DAQF_GITHUB_TOKEN }}
+          draft: false
+          generateReleaseNotes: true
+          tag: ${{ steps.check-version.outputs.version }}
+          commit: main
       - name: release to pypi
         env: 
           TOKEN: ${{ secrets.PYPI_TOKEN }}
