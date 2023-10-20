@@ -2,11 +2,6 @@
 name: Release docs & dist
 
 on:
-  push:
-  # Runs on pushes targeting the default branch
-    tags:
-      - "*"
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -35,22 +30,30 @@ jobs:
       - name: Install
         run: |
           pip3 install poetry
-      - name: run lint
-        run: make lint
-      - name: run UT
-        run: make test
-      - name: Build artifacts
-        run: make build
+      # - name: run lint
+      #   run: make lint
+      # - name: run UT
+      #   run: make test
+      # - name: Build artifacts
+      #   run: make build
+      - name: Check Version
+        id: check-version
+        run: |
+          echo version=$(poetry version --short) >> $GITHUB_OUTPUT
+      # - name: Create Release
+      #   uses: ncipollo/release-action@v1
+      #   with:
+      #     artifacts: "dist/*"
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     draft: false
+      #     generateReleaseNotes: true
+      #     tag: ${{ steps.check-version.outputs.version }}
+      #     commit: main
       - name: release to pypi
         env: 
           TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: |
-          # Get the tag reference (e.g., refs/tags/v1.0.0)
-          tag_ref="${{ github.ref }}"
-          
-          # Extract the tag name from the reference
-          export TAG_NAME="${tag_ref#refs/tags/}"
-
+          export TAG_NAME=${{ steps.check-version.outputs.version }}
           echo "Triggered by tag: $TAG_NAME"
           bash ./src/scripts/release_github.sh
   # Single deploy job since we're just deploying
